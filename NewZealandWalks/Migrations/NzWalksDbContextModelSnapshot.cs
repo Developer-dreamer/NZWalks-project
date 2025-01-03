@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NZWalks_solution.Data;
+using NewZealandWalks.Data;
 
 #nullable disable
 
-namespace NZWalks_solution.Migrations
+namespace NewZealandWalks.Migrations
 {
     [DbContext(typeof(NzWalksDbContext))]
-    [Migration("20250103105827_CreateTablesWalksRegionsDifficulties")]
-    partial class CreateTablesWalksRegionsDifficulties
+    partial class NzWalksDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,7 +22,7 @@ namespace NZWalks_solution.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("NZWalks_solution.Models.Domain.Difficulty", b =>
+            modelBuilder.Entity("NewZealandWalks.Models.Domain.Difficulty", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +37,7 @@ namespace NZWalks_solution.Migrations
                     b.ToTable("Difficulties");
                 });
 
-            modelBuilder.Entity("NZWalks_solution.Models.Domain.Region", b =>
+            modelBuilder.Entity("NewZealandWalks.Models.Domain.Region", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,7 +59,7 @@ namespace NZWalks_solution.Migrations
                     b.ToTable("Regions");
                 });
 
-            modelBuilder.Entity("NZWalks_solution.Models.Domain.Walk", b =>
+            modelBuilder.Entity("NewZealandWalks.Models.Domain.Walk", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -98,15 +95,15 @@ namespace NZWalks_solution.Migrations
                     b.ToTable("Walks");
                 });
 
-            modelBuilder.Entity("NZWalks_solution.Models.Domain.Walk", b =>
+            modelBuilder.Entity("NewZealandWalks.Models.Domain.Walk", b =>
                 {
-                    b.HasOne("NZWalks_solution.Models.Domain.Difficulty", "Difficulty")
+                    b.HasOne("NewZealandWalks.Models.Domain.Difficulty", "Difficulty")
                         .WithMany()
                         .HasForeignKey("DifficultyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NZWalks_solution.Models.Domain.Region", "Region")
+                    b.HasOne("NewZealandWalks.Models.Domain.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace NZWalks_solution.Migrations
+namespace NewZealandWalks.Migrations
 {
     /// <inheritdoc />
     public partial class CreateTablesWalksRegionsDifficulties : Migration

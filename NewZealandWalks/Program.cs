@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using NZWalks_solution.Data;
+using NewZealandWalks.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

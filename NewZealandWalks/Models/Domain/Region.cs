@@ -1,4 +1,4 @@
-namespace NZWalks_solution.Models.Domain;
+namespace NewZealandWalks.Models.Domain;
 
 public class Region
 {
