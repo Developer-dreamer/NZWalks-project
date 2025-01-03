@@ -1,6 +1,7 @@
 #Ignore Rider default folders
 **/.idea/**
 **/obj/**
+**/bin/**
 #Ignore DevSettings
 appsettings.Development.json
 # Default ignored files
