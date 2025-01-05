@@ -18,10 +18,10 @@ namespace NewZealandWalks.Controllers
         }
         
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             // obtaining Domain Models
-            var regions = _db.Regions.ToList();
+            var regions = await _db.Regions.ToListAsync();
             
             // converting to the DTOs
             var regionsDto = regions.Select(region => new RegionDto(region)).ToList();
@@ -31,9 +31,9 @@ namespace NewZealandWalks.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
-        public IActionResult GetById([FromRoute] Guid id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
-            var it = _db.Regions.Find(id);
+            var it = await _db.Regions.FindAsync(id);
             
             if (it == null) return NotFound();
             
@@ -44,12 +44,12 @@ namespace NewZealandWalks.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateRegionDto newRegionDto)
+        public async Task<IActionResult> Create([FromBody] CreateRegionDto newRegionDto)
         {
             var regionDomain = new Region(newRegionDto);
             
-            _db.Regions.Add(regionDomain);
-            _db.SaveChanges();
+            await _db.Regions.AddAsync(regionDomain);
+            await _db.SaveChangesAsync();
 
             var returnRegionDto = new RegionDto(regionDomain);
             
@@ -58,16 +58,16 @@ namespace NewZealandWalks.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] UpdateRegionDto updateRegionDto)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionDto updateRegionDto)
         {
-            Region? originRegion = _db.Regions.FirstOrDefault(x => x.Id == id);
+            Region? originRegion = await _db.Regions.FirstOrDefaultAsync(x => x.Id == id);
             if (originRegion == null) return NotFound();
 
             originRegion.Code = updateRegionDto.Code;
             originRegion.Name = updateRegionDto.Name;
             originRegion.RegionImageUrl = updateRegionDto.RegionImageUrl;
 
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             var regionDto = new RegionDto(originRegion);
 
@@ -76,13 +76,13 @@ namespace NewZealandWalks.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
-        public IActionResult Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            Region? region = _db.Regions.Find(id);
+            Region? region = await _db.Regions.FindAsync(id);
             if (region is null) return NotFound();
 
             _db.Regions.Remove(region);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             RegionDto deletedRegion = new RegionDto(region);
             return Ok(deletedRegion);
