@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NewZealandWalks.Data;
+using NewZealandWalks.Models;
 using NewZealandWalks.Models.Domain;
 using NewZealandWalks.Models.DTOs;
 using NewZealandWalks.Repositories;
@@ -25,7 +26,7 @@ namespace NewZealandWalks.Controllers
             var regions = await _regionRepository.GetAllAsync();
             
             // converting to the DTOs
-            var regionsDto = regions.Select(region => new RegionDto(region)).ToList();
+            var regionsDto = regions.Select(Mapper.MapTo<RegionDto>).ToList();
             
             return Ok(regionsDto);
         }
@@ -38,7 +39,7 @@ namespace NewZealandWalks.Controllers
             
             if (it == null) return NotFound();
             
-            var regionDto = new RegionDto(it);
+            var regionDto = Mapper.MapTo<RegionDto>(it);
                 
             return Ok(regionDto);
 
@@ -47,11 +48,11 @@ namespace NewZealandWalks.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateRegionDto newRegionDto)
         {
-            var regionDomain = new Region(newRegionDto);
+            var regionDomain = Mapper.MapFrom<CreateRegionDto>(newRegionDto);
             
             await _regionRepository.AddAsync(regionDomain);
 
-            var returnRegionDto = new RegionDto(regionDomain);
+            var returnRegionDto = Mapper.MapTo<RegionDto>(regionDomain);
             
             return CreatedAtAction(nameof(Create), new {id = regionDomain.Id}, returnRegionDto); 
         }
@@ -65,7 +66,7 @@ namespace NewZealandWalks.Controllers
 
             await _regionRepository.UpdateAsync(originRegion, updateRegionDto);
 
-            var regionDto = new RegionDto(originRegion);
+            var regionDto = Mapper.MapTo<RegionDto>(originRegion);
 
             return Ok(regionDto);
         }
@@ -79,7 +80,7 @@ namespace NewZealandWalks.Controllers
             
             await _regionRepository.DeleteAsync(region);
 
-            RegionDto deletedRegion = new RegionDto(region);
+            var deletedRegion = Mapper.MapTo<RegionDto>(region);
             return Ok(deletedRegion);
         }
     }

@@ -1,6 +1,6 @@
 namespace NewZealandWalks.Models.DTOs;
 
-public class CreateRegionDto
+public class CreateRegionDto : IRegionDto
 {
     public string Code { get; set; }
     public string Name { get; set; }
